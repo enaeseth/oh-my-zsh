@@ -22,9 +22,10 @@ function battery_charge {
 }
 
 PROMPT='%{$fg[magenta]%}%~%{$reset_color%} $(git_prompt_info)$(svn_prompt_info)$(prompt_char)%{$reset_color%} '
+RPROMPT='%*'
 
 # PROMPT='%{$fg[$NCOLOR]%}%B%n%b%{$reset_color%}:%{$fg[blue]%}%B%c/%b%{$reset_color%} $(git_prompt_info)%(!.#.$) '
-RPROMPT='$(battery_charge)'
+# RPROMPT='$(battery_charge)'
 
 PS2="%_☇ "
 
