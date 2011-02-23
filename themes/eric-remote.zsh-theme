@@ -2,9 +2,7 @@ if [ "$(whoami)" = "root" ]; then NCOLOR="red"; else NCOLOR="white"; fi
 
 function prompt_char {
     git branch >/dev/null 2>/dev/null && echo '±' && return
-    # hg root >/dev/null 2>/dev/null && echo '☿' && return
     [ -d .svn ] >/dev/null 2>/dev/null && echo '§' && return
-    # echo '○'
     echo '➜'
 }
 
@@ -17,15 +15,13 @@ function svn_prompt_info {
     echo "%{$fg_no_bold[yellow]%}$rev$suffix %{$reset_color%}"
 }
 
-function battery_charge {
-    echo `$BAT_CHARGE` 2>/dev/null
-}
-
-PROMPT='%{$fg[cyan]%}%m %{$fg[magenta]%}%~%{$reset_color%} $(git_prompt_info)$(svn_prompt_info)$(prompt_char)%{$reset_color%} '
+if [ "$(hostname | cut -d . -f 2-)" != "local" ]; then
+    HOSTNAME_PROMPT='%{$fg_bold[red]%}%m%{$reset_color%}'
+else
+    HOSTNAME_PROMPT='%{$fg[cyan]%}%m'
+fi
+PROMPT=$HOSTNAME_PROMPT' %{$fg[magenta]%}%~%{$reset_color%} $(git_prompt_info)$(svn_prompt_info)$(prompt_char)%{$reset_color%} '
 RPROMPT='%*'
-
-# PROMPT='%{$fg[$NCOLOR]%}%B%n%b%{$reset_color%}:%{$fg[blue]%}%B%c/%b%{$reset_color%} $(git_prompt_info)%(!.#.$) '
-# RPROMPT='$(battery_charge)'
 
 PS2="%_☇ "
 
